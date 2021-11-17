@@ -1,32 +1,29 @@
 import { useState, useEffect } from "react";
 
-function App() {
-  const [counter, setCounter] = useState(0);
-  const [keyword, setKeyword] = useState("");
-  const onClick = () => setCounter((current) => current + 1);
-  const onChange = (event) => setKeyword(event.target.value);
+function Hello() {
+  /*function byFn() {
+    console.log("bye :(");
+  }
+  function hiFn() {
+    console.log("hi :)");
+    return byFn;
+  }
+  useEffect(hiFn, []); 원리*/
 
-  console.log('i run all the time'); /*아무 state가 변할 때마다 실행*/
-  useEffect( () => {
-    console.log('call the api'); /*처음 1번만 실행*/
-  }, []);
-  useEffect( () => {
-    console.log("I run when 'keyword' changes.");
-  }, [keyword]); /*keyword가 변화할 때만 실행*/
   useEffect(() => {
-    console.log("I run when keyword & counter change");
-  }, [keyword, counter]); /*keyword나 counter가 변화할 때만 실행*/
-  
+    console.log("hi :)");
+    return () => console.log("bye :(");
+  }, []); /*return 이후 쓰면 컴포넌트가 사라질 때 실행*/
+  return <h1>Hello</h1>;
+}
+
+function App() {
+  const [showing, setShowing] = useState(false);
+  const onClick = () => setShowing((prev) => !prev);
   return (
     <div>
-      <input 
-        value={keyword} 
-        onChange={onChange} 
-        type="text" 
-        placeholder="Search here" 
-      />
-      <h1>count: {counter}</h1>
-      <button onClick={onClick}>click me</button>
+      {showing ? <Hello /> : null}
+      <button onClick={onClick}>{showing ? "Hide" : "Show"}</button>
     </div>
   );
 }
